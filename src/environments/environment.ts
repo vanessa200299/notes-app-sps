@@ -8,6 +8,12 @@ export const environment = {
   apiIUrl: 'http://localhost:3000/servicio/api_notes_app',
 };
 
+// export const environment = {
+//   production: false,
+//   apiIUrl: 'http://18.218.175.120/servicio/api_notes_app',
+// };
+
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
