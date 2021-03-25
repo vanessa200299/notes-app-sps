@@ -1,24 +1,8 @@
-<mat-card>
-    <mat-card-title>New Note</mat-card-title>
-    <mat-card-content>
+<mat-card class="container">
+    <mat-card-title>Create a Note</mat-card-title>
+    <mat-card-content class="container">
         <form class="example-form" [formGroup]="noteForm" (ngSubmit)="submitNote()">
-            <mat-form-field class="example-full-width">
-                <mat-label>Title</mat-label>
-                <input type="text" matInput formControlName="title" [errorStateMatcher]="matcher"
-                    placeholder="Note title">
-                <mat-error *ngIf="noteForm.get('title').hasError('required')">
-                    Title field is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <mat-label>Content</mat-label>
-                <input type="text" matInput formControlName="content" [errorStateMatcher]="matcher"
-                    placeholder="Note content">
-                <mat-error *ngIf="noteForm.get('content').hasError('required')">
-                    Content field is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" class="form-element">
                 <mat-label>User</mat-label>
                 <mat-select formControlName="user" [errorStateMatcher]="matcher">
                   <mat-option *ngFor="let user of users" [value]="user._id">
@@ -28,10 +12,33 @@
                 <mat-error *ngIf="noteForm.get('user').hasError('required')">
                     User field is <strong>required</strong>
                 </mat-error>
-              </mat-form-field>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" class="form-element">
+                <mat-label>Title</mat-label>
+                <input type="text" matInput formControlName="title" [errorStateMatcher]="matcher"
+                    placeholder="Note title">
+                <mat-error *ngIf="noteForm.get('title').hasError('required')">
+                    Title field is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" class="form-element">
+                <mat-label>Content</mat-label>
+                <textarea matInput formControlName="content" [errorStateMatcher]="matcher" placeholder="Note content"></textarea>
+                <mat-error *ngIf="noteForm.get('content').hasError('required')">
+                    Content field is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            
             <mat-card-actions>
                 <button type="submit" mat-raised-button color="primary">{{idNoteEdit?'Edit':'Add'}}</button>
             </mat-card-actions>
         </form>
     </mat-card-content>
 </mat-card>
+<style>
+    .container {
+        max-width: 572px;
+        margin: auto;
+        padding: 15px;
+    }
+</style>
