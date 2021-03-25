@@ -1,5 +1,6 @@
 //Component for list all users
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -8,11 +9,14 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-user-list',
   templateUrl: './app-user-list.component.html',
   styleUrls: ['./app-user-list.component.css'],
-  providers:[UserService]
+  providers: [UserService]
 })
 export class AppUserListComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private _snackBar: MatSnackBar
+  ) { }
 
   users: User[] = [];
   private eventsSubscription: Subscription;
@@ -32,7 +36,7 @@ export class AppUserListComponent implements OnInit {
         this.users = response;
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message,"")
       }
     );
   }
@@ -41,12 +45,18 @@ export class AppUserListComponent implements OnInit {
     //Methos for delete user by id
     this.userService.delete(idUser).subscribe(
       response => {
-        console.log(response);
+        this.openSnackBar(response.message,"")
         this.getUsers()
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message,"")
       }
     )
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

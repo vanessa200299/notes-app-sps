@@ -2,6 +2,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,19 +18,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: 'app-user-create',
   templateUrl: './app-user-create.component.html',
   styleUrls: ['./app-user-create.component.css'],
-  providers:[UserService]
+  providers: [UserService]
 })
 export class AppUserCreateComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private _snackBar: MatSnackBar
+    ) { }
 
   userFormControl = new FormControl('', [
     Validators.required,
   ]);
-  
+
   matcher = new MyErrorStateMatcher();
   @Output() userAdded = new EventEmitter();
-  
+
   ngOnInit(): void {
   }
 
@@ -37,17 +41,23 @@ export class AppUserCreateComponent implements OnInit {
     //Method for add user
     const newUser = new User();
     newUser.name = this.userFormControl.value;
-    const userForm =  document.getElementById("userForm") as HTMLFormElement
+    const userForm = document.getElementById("userForm") as HTMLFormElement
     userForm.reset()
     this.userService.create(newUser).subscribe(
       response => {
         //Emit event of new user to app-user-index
-       this.userAdded.emit(newUser);
+        this.openSnackBar(response.message, "")
+        this.userAdded.emit(newUser);
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     )
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

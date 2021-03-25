@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Note } from 'src/app/models/note';
 import { NoteService } from 'src/app/services/note.service';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-note-list',
@@ -16,6 +17,7 @@ export class AppNoteListComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) { }
 
   notes: Note[] = [];
@@ -32,7 +34,7 @@ export class AppNoteListComponent implements OnInit {
         this.notes = response;
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     )
   }
@@ -41,10 +43,11 @@ export class AppNoteListComponent implements OnInit {
     //Method for delet note by id
     this.noteService.delete(idNote).subscribe(
       response => {
+        this.openSnackBar(response.message, "")
         this.getNotes();
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     )
   }
@@ -55,7 +58,14 @@ export class AppNoteListComponent implements OnInit {
   }
 
   getRelativeDateCreated(date: Date): string {
-     //Method for get a formatted date text
+    //Method for get a formatted date text
     return moment(date).fromNow();
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
 }

@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Note } from 'src/app/models/note';
 import { User } from 'src/app/models/user';
@@ -29,13 +30,14 @@ export class AppNoteCreateComponent implements OnInit {
     private noteService: NoteService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) { }
 
   users: User[] = [];
   noteForm: FormGroup;
   matcher = new MyErrorStateMatcher();
   // id of the note to edit
-  idNoteEdit: string=null;
+  idNoteEdit: string = null;
 
   ngOnInit(): void {
 
@@ -65,7 +67,7 @@ export class AppNoteCreateComponent implements OnInit {
           this.noteForm.get('user').setValue(response.user);
         },
         error => {
-          console.log(error)
+          this.openSnackBar(error.error.message, "")
         }
       );
 
@@ -78,7 +80,7 @@ export class AppNoteCreateComponent implements OnInit {
         this.users = response;
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     );
   }
@@ -98,28 +100,37 @@ export class AppNoteCreateComponent implements OnInit {
       this.addNote(note)
     }
   }
+
   addNote(note: Note): void {
     //Method for add note
     this.noteService.create(note).subscribe(
       response => {
+        this.openSnackBar(response.message, "")
         this.router.navigate(['']);
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     )
   }
 
   editNote(note: Note): void {
-     //Method for edit note
-    this.noteService.edit(note,this.idNoteEdit).subscribe(
+    //Method for edit note
+    this.noteService.edit(note, this.idNoteEdit).subscribe(
       response => {
+        this.openSnackBar(response.message, "")
         this.router.navigate(['']);
       },
       error => {
-        console.log(error)
+        this.openSnackBar(error.error.message, "")
       }
     )
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }
