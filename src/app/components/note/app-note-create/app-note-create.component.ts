@@ -55,6 +55,9 @@ export class AppNoteCreateComponent implements OnInit {
       user: new FormControl('', [
         Validators.required,
       ]),
+      created: new FormControl('', [
+        Validators.required,
+      ]),
     });
 
     //If idNoteEdit exist we find  the note
@@ -93,6 +96,7 @@ export class AppNoteCreateComponent implements OnInit {
     note.title = this.noteForm.get('title').value
     note.content = this.noteForm.get('content').value
     note.user = this.noteForm.get('user').value
+    note.created = this.noteForm.get('created').value
     //If i NoteEdit exists, update if not add a note
     if (this.idNoteEdit) {
       this.editNote(note);

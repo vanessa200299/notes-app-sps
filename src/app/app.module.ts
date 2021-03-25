@@ -20,6 +20,8 @@ import { AppNoteListComponent } from './components/note/app-note-list/app-note-l
 import { AppNoteCreateComponent } from './components/note/app-note-create/app-note-create.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatToolbarModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule 
   ],
   providers: [AppRoutingProviders],
   bootstrap: [AppComponent]

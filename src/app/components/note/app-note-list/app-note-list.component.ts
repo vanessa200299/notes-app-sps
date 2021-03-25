@@ -30,6 +30,7 @@ export class AppNoteListComponent implements OnInit {
     //Method for find all notes
     this.noteService.findAll().subscribe(
       response => {
+        console.log(response);
         this.notes = null;
         this.notes = response;
       },

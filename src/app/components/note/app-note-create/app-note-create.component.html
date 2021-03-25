@@ -5,9 +5,9 @@
             <mat-form-field appearance="fill" class="form-element">
                 <mat-label>User</mat-label>
                 <mat-select formControlName="user" [errorStateMatcher]="matcher">
-                  <mat-option *ngFor="let user of users" [value]="user._id">
-                    {{user.name}}
-                  </mat-option>
+                    <mat-option *ngFor="let user of users" [value]="user._id">
+                        {{user.name}}
+                    </mat-option>
                 </mat-select>
                 <mat-error *ngIf="noteForm.get('user').hasError('required')">
                     User field is <strong>required</strong>
@@ -23,12 +23,22 @@
             </mat-form-field>
             <mat-form-field class="example-full-width" class="form-element">
                 <mat-label>Content</mat-label>
-                <textarea matInput formControlName="content" [errorStateMatcher]="matcher" placeholder="Note content"></textarea>
+                <textarea matInput formControlName="content" [errorStateMatcher]="matcher"
+                    placeholder="Note content"></textarea>
                 <mat-error *ngIf="noteForm.get('content').hasError('required')">
                     Content field is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            
+            <mat-form-field class="example-full-width" class="form-element">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" matInput formControlName="created" [errorStateMatcher]="matcher">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="noteForm.get('created').hasError('required')">
+                    Date field is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
             <mat-card-actions>
                 <button type="submit" mat-raised-button color="primary">{{idNoteEdit?'Edit':'Add'}}</button>
             </mat-card-actions>
