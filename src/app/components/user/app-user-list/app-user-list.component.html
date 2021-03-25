@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-nav-list>
+        <div *ngFor="let user of users; index as i">
+            <span matLine>{{user.name}}</span>
+            <button mat-icon-button color="warn" (click)="deleteUser(user._id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </mat-nav-list>
+</mat-card>

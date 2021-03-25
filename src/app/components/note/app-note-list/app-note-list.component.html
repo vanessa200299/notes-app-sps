@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-grid-list cols="3">
+        <mat-grid-tile *ngFor="let note of notes; index as i" [colspan]="1">
+            <mat-card>
+                <mat-card-title>
+                    {{note.title}} <button mat-flat-button color="primary" (click)="editNote(note._id)">Edit</button>
+                </mat-card-title>
+                <mat-card-content>
+                    {{note.content}}
+                    <p>Created by: {{note.user.name}}</p>
+                    <p>Created: {{getRelativeDateCreated(note.created)}}</p>
+                    <p *ngIf="note.updated">Updated: {{getRelativeDateCreated(note.updated)}}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-flat-button color="warn" (click)="deleteNote(note._id)">Delete</button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>

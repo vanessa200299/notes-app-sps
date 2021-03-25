@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-title>New User</mat-card-title>
+    <mat-card-content>
+        <form id="userForm" class="example-form"  #userForm="ngForm" (ngSubmit)="newUser()">
+            <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput [formControl]="userFormControl" [errorStateMatcher]="matcher"
+                    placeholder="User name">
+                <mat-error *ngIf="userFormControl.hasError('required')">
+                    Name field is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-card-actions>
+                <button type="submit" mat-raised-button color="primary" >Save</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>
+</mat-card>

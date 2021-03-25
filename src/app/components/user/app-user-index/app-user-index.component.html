@@ -1,0 +1,10 @@
+<mat-card>
+    <mat-grid-list cols="4">
+        <mat-grid-tile [colspan]="1">
+            <app-user-create (userAdded)='userAdded($event)'></app-user-create>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3">
+            <app-user-list [events]="eventsSubject.asObservable()"></app-user-list>
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-card>
